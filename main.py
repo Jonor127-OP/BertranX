@@ -1,4 +1,5 @@
 import random
+import sys
 
 import numpy as np
 import pandas as pd
@@ -6,7 +7,7 @@ import torch
 import yaml
 
 from asdl.grammar import GrammarRule, Grammar, ReduceAction
-from components.dataset import Dataset
+from dataset.dataset import Dataset
 from config.config import init_arg_parser
 from test import test
 from train import train
@@ -63,15 +64,11 @@ if __name__ == '__main__':
         if params['dataset'] == 'conala':
             train_set = Dataset(pd.read_csv(args.train_path_conala + 'conala-train.csv'))
             dev_set = Dataset(pd.read_csv(args.train_path_conala + 'conala-val.csv'))
-        elif params['dataset'] == 'codesearchnet':
-            train_set = Dataset(pd.read_csv(args.train_path_codesearchnet + 'train.csv'))
-            dev_set = Dataset(pd.read_csv(args.dev_path_codesearchnet + 'valid.csv'))
         elif params['dataset'] == 'django':
             train_set = Dataset(pd.read_csv(args.train_path_django + 'train.csv'))
             dev_set = Dataset(pd.read_csv(args.dev_path_django + 'dev.csv'))
-        elif params['dataset'] == 'apps':
-            train_set = Dataset(pd.read_csv(args.train_path_apps + 'train.csv'))
-            dev_set = Dataset(pd.read_csv(args.train_path_apps + 'dev.csv'))
+        else:
+            sys.exit('Wrong train path for' + params['dataset'])
 
         train(train_set, dev_set, args, gridsearch, act_dict, grammar, primitives_type, device, map_location, is_cuda)
 
@@ -79,11 +76,9 @@ if __name__ == '__main__':
         # Load test set
         if params['dataset'] == 'conala':
             test_set = Dataset(pd.read_csv(args.test_path_conala + 'conala-test.csv'))
-        elif params['dataset'] == 'codesearchnet':
-            test_set = Dataset(pd.read_csv(args.test_path_codesearchnet + 'test.csv'))
-        elif params['dataset'] == 'django':
-            test_set = Dataset(pd.read_csv(args.dev_path_django + 'test.csv'))
         elif params['dataset'] == 'apps':
             test_set = Dataset(pd.read_csv(args.test_path_apps + 'test.csv'))
+        else:
+            sys.exit('Wrong test path for' + params['dataset'])
 
         test(test_set, gridsearch, args, map_location, act_dict, grammar, primitives_type, device, is_cuda)

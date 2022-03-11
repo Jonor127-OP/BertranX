@@ -5,9 +5,7 @@ from config.config import init_arg_parser
 from dataset.data_conala.json_to_csv import data_creation
 from dataset.data_conala.preprocess_conala import preprocess_data_conala
 from dataset.data_django.preprocess_django import *
-from dataset.data_github.preprocess_codesearchnet import preprocess_codesearchnet_dataset
-from dataset.data_apps import apps_create_split
-from dataset.data_apps.preprocess_apps import preprocess_data_apps
+
 
 if __name__ == '__main__':
     args = init_arg_parser()
@@ -55,54 +53,3 @@ if __name__ == '__main__':
             create_vocab(pydf_train, act_dict, params)
             # pydf_train = pd.read_csv('dataset/data_django/train.csv')
             # create_vocab(pydf_train, act_dict, params)
-
-    if params['dataset'] == 'codesearchnet':
-
-        print('codesearchnet preprocessing loading ...')
-
-        preprocess_codesearchnet_dataset(args, params, act_dict, params['decode_max_time_step'])
-
-        print()
-        print('codesearchnet preprocessing done.')
-
-        if params['create_vocab'] == True:
-            print('codesearchnet vocabulary creation begins')
-            pydf_train = pd.read_csv(args.train_path_codesearchnet + 'train.csv')
-            pydf_valid = pd.read_csv(args.dev_path_codesearchnet + 'valid.csv')
-
-            pydf_vocabulary = pd.concat([pydf_train[['intent', 'snippet_actions']],
-                                         pydf_valid[['intent', 'snippet_actions']]])
-
-            create_vocab(pydf_train, act_dict, params)
-
-            # pydf_train = pd.read_csv(args.train_path_codesearchnet + 'train.csv')
-            # create_vocab(pydf_train, act_dict, params)
-
-            print()
-            print('codesearchnet vocabulary creation done')
-
-    if params['dataset'] == 'apps':
-
-        print('apps preprocessing loading ...')
-
-        paths = [(args.train_path_apps + 'data_split/train.json', 'train'), (args.test_path_apps + 'data_split/test.json', 'test')]
-
-        apps_create_split
-
-        preprocess_data_apps(paths, act_dict, params)
-
-        print()
-        print('apps preprocessing done.')
-
-        if params['create_vocab'] == True:
-            print('apps vocabulary creation begins')
-            pydf_train = pd.read_csv(args.train_path_apps + 'train.csv')
-            pydf_valid = pd.read_csv(args.train_path_apps + 'dev.csv')
-
-            pydf_vocabulary = pd.concat([pydf_train[['intent', 'snippet_actions']],
-                                         pydf_valid[['intent', 'snippet_actions']]])
-
-            create_vocab(pydf_train, act_dict, params)
-
-            print()
-            print('apps vocabulary creation done')

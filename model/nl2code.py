@@ -11,7 +11,7 @@ from transformers import BertModel
 
 from asdl.grammar import GrammarRule
 from asdl.hypothesis import DecodeHypothesis
-from components.dataset import Batch
+from dataset.dataset import Batch
 from model import nn_utils
 from model.nn_utils import LabelSmoothing
 from model.pointernet import PointerNet
@@ -677,19 +677,6 @@ class nl2code(nn.Module):
         else:
             return 'ActionRule'
 
-    @staticmethod
-    def is_int(x):
-        try:
-            a = float(x)
-        except (TypeError, ValueError):
-            return str(x)
-        else:
-            try:
-                b = int(a)
-            except (TypeError, ValueError, OverflowError):
-                return a
-            else:
-                return b
 
     @staticmethod
     def terminal_type(terminal):
@@ -720,7 +707,6 @@ class nl2code(nn.Module):
     def completion(self, action, pointer, stack):
         if len(pointer) == 0:
             return pointer, stack
-        # elif stack[-1][pointer[-1]][2] == '-' or stack[-1][pointer[-1]][2] == '?' or action == 'Reduce' or action == 'Reduce_primitif':
         elif stack[-1][pointer[-1]][2] == '-' or stack[-1][pointer[-1]][2] == '?' or action == 'Reduce' or action == 'Reduce_primitif':
             pointer = self.shift(pointer)
             if pointer[-1] == len(stack[-1]):

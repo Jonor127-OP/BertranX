@@ -12,20 +12,21 @@ unzip conala-corpus-v1.1.zip -d ./dataset/data_conala
 rm -r conala-corpus-v1.1.zip
 echo "CoNaLa done"
 
-echo "download CodeSearchNet dataset"
-wget https://s3.amazonaws.com/code-search-net/CodeSearchNet/v2/python.zip
-unzip python.zip -d ./dataset/data_github
-rm -r python.zip
-echo "CodeSearchNet done"
+#echo "download CodeSearchNet dataset"
+#wget https://s3.amazonaws.com/code-search-net/CodeSearchNet/v2/python.zip
+#unzip python.zip -d ./dataset/data_github
+#rm -r python.zip
+#echo "CodeSearchNet done"
 
-echo "download APPS dataset"
-wget https://people.eecs.berkeley.edu/\~hendrycks/APPS.tar.gz --no-check-certificate
-tar -xzf APPS.tar.gz -C dataset
-rsync -a dataset/apps_dataset/APPS dataset/data_apps
-rm -r APPS.tar.gz
-rm -r dataset/apps_dataset
-echo "APPS done"
+#echo "download APPS dataset"
+#wget https://people.eecs.berkeley.edu/\~hendrycks/APPS.tar.gz --no-check-certificate
+#tar -xzf APPS.tar.gz -C dataset
+#rsync -a dataset/apps_dataset/APPS dataset/data_apps
+#rm -r APPS.tar.gz
+#rm -r dataset/apps_dataset
+#echo "APPS done"
 
 # Preprocess data
+
 python get_data.py \
-    config/config_seq2seq.yml
+    config/config.yml

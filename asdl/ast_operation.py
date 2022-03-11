@@ -42,6 +42,7 @@ def canonicalize_code(code):
 
     return ast.parse(code)
 
+
 def make_iterlists(action_sequence):
     # makes lists in the history
     # On fait une liste où on fait rentrer tous les arguments multiples

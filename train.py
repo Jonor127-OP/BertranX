@@ -4,7 +4,6 @@ import time
 
 import torch
 from torch import optim
-from torch.utils.tensorboard import SummaryWriter
 
 from model.nl2code import nl2code
 from utils import evaluate_action, epoch_time
@@ -12,8 +11,6 @@ from utils import evaluate_action, epoch_time
 
 def train(train_set, dev_set, args, gridsearch, act_dict, grammar, primitives_type, device, map_location,
           is_cuda):
-    # Tensorboard log initialisation
-    writer = SummaryWriter()
 
     for params in gridsearch.generate_setup():
 

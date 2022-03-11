@@ -2,21 +2,21 @@ name: config
 experiment_env:
 
   # model_parameters
-  nl_embed_size                   : [128]
-  action_embed_size               : [128]
-  hidden_size                     : [256]
-  att_size                        : [256]
+  nl_embed_size                   : [256]
+  action_embed_size               : [256]
+  hidden_size                     : [512]
+  att_size                        : [512]
   field_embed_size                : [64]
   type_embed_size                 : [64]
   cardinality_embed_size          : [16]
   dropout_encoder                 : [0]
-  dropout_decoder                 : [0.4]
-  model                           : "seq2seq"
+  dropout_decoder                 : [0.3]
+  model                           : "bert"
   n_layers                        : 1
   beam_size                       : 1
-  lr                              : 0.001
-  lr_decay                        : 0.0001
-  lr_decay_after_epoch            : 50
+  lr                              : 0.00005
+  lr_decay                        : 0.000005
+  lr_decay_after_epoch            : 55
   max_num_trial                   : 5
   patience                        : 3
   readout                         : "identity"
@@ -37,11 +37,11 @@ experiment_env:
   create_vocab                    : True
   word_freq                       : 1
   metric                          : 'BLEU'
-  change_term_name                : False
+  change_term_name                : True
 
   # train_parameters
-  batch_size                      : 128
-  epochs                          : 80
+  batch_size                      : 16
+  epochs                          : 60
   log_every                       : 5
   seed                            : 1234
-  GPU                             : 1
+  GPU                             : 0
